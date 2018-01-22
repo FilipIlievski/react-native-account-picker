@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.accountpicker;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,11 +14,6 @@ public class RNAccountPickerPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
       return Arrays.<NativeModule>asList(new RNAccountPickerModule(reactContext));
-    }
-
-    // Deprecated from RN 0.47
-    public List<Class<? extends JavaScriptModule>> createJSModules() {
-      return Collections.emptyList();
     }
 
     @Override

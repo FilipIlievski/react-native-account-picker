@@ -1,15 +1,18 @@
 
-package com.reactlibrary;
+package com.accountpicker;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 
 import android.R.string;
 import android.content.Intent;
 import android.app.Activity;
+import android.accounts.AccountManager;
 import com.google.android.gms.common.AccountPicker;
 
 public class RNAccountPickerModule extends ReactContextBaseJavaModule {
@@ -41,9 +44,9 @@ public class RNAccountPickerModule extends ReactContextBaseJavaModule {
 
           } else if (resultCode == Activity.RESULT_OK) {
 
-            if (intent) {
+            if (intent != null) {
               String selectedAccount = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-              if (selectedAccount) {
+              if (selectedAccount != null) {
                 pickerPromise.resolve(selectedAccount);
               } else {
                 pickerPromise.reject(E_NO_ACCOUNT_DATA, "No Account data found");
@@ -77,7 +80,7 @@ public class RNAccountPickerModule extends ReactContextBaseJavaModule {
       pickerPromise = promise;
 
       try {
-        final Intent intent = AccountPicker.newChooseAccountIntent(null, null, null, true, null, null, null, null);
+        final Intent accountIntent = AccountPicker.newChooseAccountIntent(null, null, null, true, null, null, null, null);
         currentActivity.startActivityForResult(accountIntent, ACCOUNT_PICKER_REQUEST);
       } catch (Exception e) {
         pickerPromise.reject(E_FAILED_TO_SHOW_PICKER, e);
